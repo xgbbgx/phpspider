@@ -54,5 +54,5 @@ $product=[
     'product_counter'=>$product_counter,
     'product_price'=>$product_price
 ];
-
+print_r($product);
 exit;

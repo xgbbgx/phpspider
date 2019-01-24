@@ -18,13 +18,15 @@ $p_currency='1';
 $price=trim(str_replace('￥', '', $price));
 $size=selector::select($html, '.guige','css');
 $size=trim(str_replace('/', '', $size));
+$images=selector::select($html, '.product_details_info_wrapper > img','css');
 $product=[
     'name'=>$name,
     'info'=>$info,
     'effect'=>$effect,
     'img'=>$img,
     'price'=>$price,
-    'size'=>$size
+    'size'=>$size,
+    'images'=>json_encode($images)
 ];
 print_r($product);
 exit;
