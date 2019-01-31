@@ -6,7 +6,7 @@ use phpspider\core\selector;
 use phpspider\core\db;
 use phpspider\core\image;
 set_time_limit(0);
-$url='https://www.esteelauder.com.cn/product/14731/39183/product-catalog/micro-essence';
+$url='https://www.esteelauder.com.cn/product/634/29627/product-catalog/black-brown';
 $html = requests::get($url);
 
 /**
@@ -42,7 +42,6 @@ if($product_attr){
     $product_counter=@$product_attr['3'];
 }
 $product_size_arr=explode(' ', $product_size);
-print_r($product_size_arr);
 $product_unit=empty($product_size_arr[1]) ?'':$product_size_arr[1];
 $product_size=empty($product_size_arr[0]) ?'':$product_size_arr[0];
 if(count($product_size_arr)>1){
@@ -62,6 +61,15 @@ if(count($product_size_arr)>1){
             $product_size=$product_size_1;
         }
     }
+}else{
+    $product_unit=0;
+    $product_size='';
+}
+if(is_numeric($product_size)){
+    $product_unit=0;
+}
+if(in_array($product_unit, ['ml','毫升','g','克','mg','毫克','片','只','支'])){
+    $product_unit='';
 }
 $reg1="/<a href=\"(.*?)\">(.*?)/i";
 preg_match_all($reg1,$product_url,$aarray);

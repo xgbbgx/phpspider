@@ -141,9 +141,7 @@ $spider->on_extract_field = function($fieldname, $data, $page)
 };
 
 $category = array(
-    '唇膏' => '173',
-    '唇彩' => '174',
-    '唇线笔'=>'176'
+    '唇膏' => '173'
 );
 
 $spider->on_extract_page = function($page, $data) use ($category)

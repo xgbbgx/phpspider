@@ -12,9 +12,7 @@ use phpspider\core\image;
 $configs = array(
     'name' => 'esteelauder',
     'tasknum' => 1,
-    //'multiserver' => true,
     'log_show' => true,
-    //'save_running_state' => false,
     'domains' => array(
         'www.esteelauder.com.cn'
     ),
@@ -22,16 +20,11 @@ $configs = array(
         "https://www.esteelauder.com.cn/products/687/product-catalog",//唇膏
     ),
     'list_url_regexes' => array(
-       "https://www.esteelauder.com.cn/products/687/product-catalog",//唇膏
-    ),///29363/product-catalog/micro-essence
+        "https://www.esteelauder.com.cn/products/687/product-catalog",//唇膏
+    ),
     'content_url_regexes' => array(
         "/product/687/[0-9a-zA-Z\_\-\/]+",
-        //"/product/13853/\d+/[0-9a-zA-Z\.\_\-\/\#]+",
     ),
-    //'export' => array(
-    //'type' => 'db',
-    //'table' => 'meinv_content',
-    //),
     'db_config' => array(
         'host'  => '115.29.189.76',
         'port'  => 3306,
@@ -113,6 +106,7 @@ $configs = array(
         '192.168.0.4',
         '192.168.0.6',
         '192.168.0.7',
+        '192.168.0.8',
     ),
 );
 
@@ -158,21 +152,14 @@ $category = array(
 $spider->on_extract_page = function($page, $data) use ($category)
 {
     $product=$data;
-    //$product=empty($data['product_name_en']) ? []:$data['product_name_en'];
-    /**if (!isset($category[trim($product['category'])]))
-    {
-        return false;
-    }else{
-        $categoryId=$category[trim($product['category'])];
-    }*/
     $categoryId=1;
     $productId=trim($product['product_id']);
     $sql = "Select Count(*) As `count` From `t_estee_lauder` Where product_id='{$productId}'";
     $row = db::get_one($sql);
     if (!$row['count'])
     {
-        $skuDir='/uploads/product/sku/'.date('Y').'/'.date('m').'/'.date('d').'/';
-        $shadeDir='/uploads/product/shade/'.date('Y').'/'.date('m').'/'.date('d').'/';
+        $skuDir='/uploads/product/'.date('Y').'/'.date('m').'_'.date('d').'/';
+        //$shadeDir='/uploads/product/shade/'.date('Y').'/'.date('m').'/'.date('d').'/';
         $url='https://www.esteelauder.com.cn';
         $rating=0;
         $skuDefalut=0;
@@ -202,13 +189,23 @@ $spider->on_extract_page = function($page, $data) use ($category)
                 $product_size=0;
             }
         }
+        $pCover=[];
+        if($product['product_cover']){
+            if(count($product['product_cover'])>1){
+                foreach ($product['product_cover'] as $p){
+                    $pCover[]=image::saveFile($skuDir,$url.$p);
+                }
+            }else{
+                $pCover[]=image::saveFile($skuDir,$url.$product['product_cover']);
+            }
+        }
         $product_price=trim(str_replace('¥', '', $product['product_price']));
         $currency=1;
         $productData=[
             'product_id'=>$productId,
             'product_name'=>empty($product['product_name']) ?'':$product['product_name'],
             'product_name_en'=>empty($product['product_name_en'])?'':$product['product_name_en'],
-            'product_cover'=>image::saveFile($skuDir,$url.$product['product_cover']),
+            'product_cover'=>json_encode($pCover),
             'product_feature'=>'',//json_encode($product['product_desc'],JSON_UNESCAPED_UNICODE),
             'buzzword'=>'',//$product['buzzword'],
             'source'=>'esteelauder',
