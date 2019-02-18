@@ -33,12 +33,7 @@ $configs = array(
     //'table' => 'meinv_content',
     //),
     'db_config' => array(
-        'host'  => '115.29.189.76',
-        'port'  => 3306,
-        'user'  => 'root',
-        'pass'  => 'xgb3217144',
-        'name'  => 'spider_dev',
-        'charset'=>'utf8',
+
     ),
     'fields' => array(
         array(

@@ -6,9 +6,71 @@ use phpspider\core\selector;
 use phpspider\core\db;
 use phpspider\core\image;
 set_time_limit(0);
-$url='https://www.esteelauder.com.cn/product/634/29627/product-catalog/black-brown';
-$html = requests::get($url);
 
+//$skuDir='/uploads/product/'.date('Y').'/'.date('m').'_'.date('d').'/';
+//echo image::saveFile($skuDir,'https://www.esteelauder.com.cn/media/export/cms/products/558x768/el_sku_YLJ901_558x768_0.jpg');
+//exit;
+$url='https://www.esteelauder.com.cn/product/634/42965/product-catalog/brow-multi-tasker';
+$html = requests::get($url);
+ 
+$regex='@var page_data =(.*?)</script>@';
+$jsRes=selector::select($html, $regex,'regex');
+
+$jsData=json_decode(trim($jsRes),true);
+$prductA=$jsData['catalog-spp']['products'][0];
+print_r($prductA);
+$product=[
+		'product_id'=>$prductA['PRODUCT_ID'],
+		'name'=>$prductA['PROD_RGN_SUBHEADING'],
+		'name_en'=>$prductA['PROD_RGN_NAME'],
+		'detail'=>$prductA['PRODUCT_DETAILS_LONG'],
+		'cover'=>$prductA['LARGE_IMAGE'],
+		'url'=>$prductA['url'],
+		'effect'=>$prductA['ATTRIBUTE_DESC_1'],
+		'usage'=>$prductA['ATTRIBUTE_DESC_2'],
+		'ingredients'=>$prductA['ATTRIBUTE_DESC_3'],
+		'skin_type'=>$prductA['ATTRIBUTE_LABEL_4'],
+		'counter'=>$prductA['ATTRIBUTE_DESC_5'],
+		'default_id'=>$prductA['defaultSku']['SKU_ID']
+];
+print_r($product);
+$skusA=$prductA['skus'];
+$skus=[];
+if($skusA){
+	foreach ($skusA as $s){
+		$currency=1;//RMB
+		$price=0;
+		if($s['formattedPrice']){
+			$price=doubleval(trim(str_replace('¥', '', $s['formattedPrice'])));
+		}
+		$unit='';$size=0;
+		if($s['PRODUCT_SIZE']){
+			if(preg_match('/\d+(\.\d{1,4})?(ml|g|毫升|克|mg|毫克|片|只|支)+/',$s['PRODUCT_SIZE'],$matchs1)){
+				$product_size_1=doubleval($s['PRODUCT_SIZE']);
+				$unit=trim(str_replace($product_size_1, '', $s['PRODUCT_SIZE']));
+				$size=$product_size_1;
+			}
+		}
+		$skus[]=[
+			'name'=>$s['SKU_ID'],
+			'upc_code'=>$s['UPC_CODE'],
+			'cover'=>$s['XL_IMAGE'],
+			'price'=>$price,
+			'currency'=>$currency,
+			'size'=>$size,
+			'unit'=>$unit,
+			'hex'=>$s['HEX_VALUE_STRING'],
+			'shade_name'=>$s['SHADENAME'],
+			'shade_cover'=>$s['XL_SMOOSH'],
+			'shade_description'=>$s['SHADE_DESCRIPTION'],
+			'color_family'=>$s['ATTRIBUTE_COLOR_FAMILY'],
+			'smoosh_design'=>$s['SMOOSH_DESIGN'],
+			'intensity'=>$s['INTENSITY']
+		];
+	}
+}
+print_r($skus);
+exit;
 /**
  // 选择器规则
  $selector = "//h3[contains(@class,'product__subline')]//h3";
@@ -42,34 +104,37 @@ if($product_attr){
     $product_counter=@$product_attr['3'];
 }
 $product_size_arr=explode(' ', $product_size);
-$product_unit=empty($product_size_arr[1]) ?'':$product_size_arr[1];
-$product_size=empty($product_size_arr[0]) ?'':$product_size_arr[0];
+print_r($product_size_arr);
 if(count($product_size_arr)>1){
-    if( preg_match('/\\d+/',$product_size,$matchs1) == 1){
-        $product_unit=empty($product_size_arr[1]) ?'':$product_size_arr[1];
-        $product_size=empty($product_size_arr[0]) ?0:$product_size_arr[0];
-    }else{
-        $product_unit=empty($product_size_arr[2]) ?'':$product_size_arr[2];
-        $product_size=empty($product_size_arr[1]) ?0:$product_size_arr[1];
-    }
-    if($product_size){
-        if(is_numeric(trim($product_size))){
-            
-        }else{
-            $product_size_1=intval($product_size);
-            $product_unit=trim(str_replace($product_size_1, '', $product_size));
-            $product_size=$product_size_1;
-        }
-    }
-}else{
-    $product_unit=0;
-    $product_size='';
-}
-if(is_numeric($product_size)){
-    $product_unit=0;
-}
-if(in_array($product_unit, ['ml','毫升','g','克','mg','毫克','片','只','支'])){
-    $product_unit='';
+	$product_unit=empty($product_size_arr[1]) ?'':$product_size_arr[1];
+	$product_size=empty($product_size_arr[0]) ?'':$product_size_arr[0];
+	if( preg_match('/d+/',$product_size,$matchs1) == 1){
+	}else{
+		if(preg_match('/^[0-9]+(ml|g|毫升|克|mg|毫克|片|只|支)+/',$product_size,$matchs1)){
+			$product_size_1=intval($product_size);
+			$product_unit=trim(str_replace($product_size_1, '', $product_size));
+			$product_size=$product_size_1;
+		}else{
+			$product_unit=empty($product_size_arr[2]) ?'':$product_size_arr[2];
+			$product_size=empty($product_size_arr[1]) ?0:$product_size_arr[1];
+		}
+	}
+	/**if($product_size){
+		if(is_numeric(trim($product_size))){
+			
+		}else{
+			$product_size_1=intval($product_size);
+			$product_unit=trim(str_replace($product_size_1, '', $product_size));
+			$product_size=$product_size_1;
+		}
+	}*/
+	$product_unit=trim(strtolower($product_unit));
+	$product_unit = preg_replace("/(\s|\ \;|　|\xc2\xa0)/","",$product_unit);
+	if(in_array($product_unit,  ['ml','毫升','g','克','mg','毫克','片','只','支'])){
+	}else{
+		$product_unit='';
+		$product_size=0;
+	}
 }
 $reg1="/<a href=\"(.*?)\">(.*?)/i";
 preg_match_all($reg1,$product_url,$aarray);

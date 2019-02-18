@@ -1,0 +1,140 @@
+2019-02-05 20:14:46 [Warning] Query SQL: Select Count(*) As `count` From `t_estee_lauder` Where product_id='PROD42965' limit 1
+2019-02-05 20:14:46 [Warning] Error SQL: Table 'spider_dev.t_estee_lauder' doesn't exist
+debug_backtrace：
+[0] in function phpspider\core\db::get_one  in D:\php\htdocs\phpspider\cmc\esteelauder.php  on line 157 
+[1] in function {closure} 
+[2] in function call_user_func  in D:\php\htdocs\phpspider\core\phpspider.php  on line 2002 
+[3] in function phpspider\core\phpspider->get_html_fields  in D:\php\htdocs\phpspider\core\phpspider.php  on line 1464 
+[4] in function phpspider\core\phpspider->collect_page  in D:\php\htdocs\phpspider\core\phpspider.php  on line 1204 
+[5] in function phpspider\core\phpspider->do_collect_page  in D:\php\htdocs\phpspider\core\phpspider.php  on line 1114 
+[6] in function phpspider\core\phpspider->start  in D:\php\htdocs\phpspider\cmc\esteelauder.php  on line 243 
+2019-02-05 20:14:46 [Warning] Query SQL: Insert Ignore Into `t_product` (`product_id`,`name`,`name_en`,`detail`,`cover`,`product_feature`,`usage`,`effect`,`ingredients`,`skin_type`,`counter`,`source`,`source_url`,`default_sku_id`,`brand_id`) Values ("PROD42965","持妆多效眉笔","Brow Multi-tasker","<P><STRONG>持妆多效眉笔 持久自然</STRONG><BR>梳理、勾勒、晕染，三效合一，一支即可画出理想眉型。<BR>·螺旋头眉梳轻刷眉毛，整齐自然。<BR>·砍刀头眉笔轻松画出线条，简单有型。<BR>·海绵头眉粉轻松晕染，丰盈眉毛。</P><P><STRONG>使用方法：</STRONG><BR>第一步：眉笔端涂抹眉部，上色塑性。<BR>第二步：轻旋笔身，内置眉粉绵头，塑造轻柔质感眉。<BR>第三步：用另一端眉刷晕染、柔和颜色。</P><P></P><P>&nbsp;</P>","[]","null","","自然晕染<br>均匀柔滑<br>快速勾勒眉形","","肌肤类型","","estee_lauder","/product/634/42965/product-catalog/brow-multi-tasker","SKU73257","1")
+2019-02-05 20:14:46 [Warning] Error SQL: Unknown column 'product_feature' in 'field list'
+debug_backtrace：
+[0] in function phpspider\core\db::insert  in D:\php\htdocs\phpspider\cmc\esteelauder.php  on line 195 
+[1] in function {closure} 
+[2] in function call_user_func  in D:\php\htdocs\phpspider\core\phpspider.php  on line 2002 
+[3] in function phpspider\core\phpspider->get_html_fields  in D:\php\htdocs\phpspider\core\phpspider.php  on line 1464 
+[4] in function phpspider\core\phpspider->collect_page  in D:\php\htdocs\phpspider\core\phpspider.php  on line 1204 
+[5] in function phpspider\core\phpspider->do_collect_page  in D:\php\htdocs\phpspider\core\phpspider.php  on line 1114 
+[6] in function phpspider\core\phpspider->start  in D:\php\htdocs\phpspider\cmc\esteelauder.php  on line 243 
+2019-02-05 20:14:46 [Warning] Query SQL: Select Count(*) As `count` From `t_estee_lauder` Where product_id='PROD29627' limit 1
+2019-02-05 20:14:46 [Warning] Error SQL: Table 'spider_dev.t_estee_lauder' doesn't exist
+debug_backtrace：
+[0] in function phpspider\core\db::get_one  in D:\php\htdocs\phpspider\cmc\esteelauder.php  on line 157 
+[1] in function {closure} 
+[2] in function call_user_func  in D:\php\htdocs\phpspider\core\phpspider.php  on line 2002 
+[3] in function phpspider\core\phpspider->get_html_fields  in D:\php\htdocs\phpspider\core\phpspider.php  on line 1464 
+[4] in function phpspider\core\phpspider->collect_page  in D:\php\htdocs\phpspider\core\phpspider.php  on line 1204 
+[5] in function phpspider\core\phpspider->do_collect_page  in D:\php\htdocs\phpspider\core\phpspider.php  on line 1114 
+[6] in function phpspider\core\phpspider->start  in D:\php\htdocs\phpspider\cmc\esteelauder.php  on line 243 
+2019-02-05 20:14:46 [Warning] Query SQL: Insert Ignore Into `t_product` (`product_id`,`name`,`name_en`,`detail`,`cover`,`product_feature`,`usage`,`effect`,`ingredients`,`skin_type`,`counter`,`source`,`source_url`,`default_sku_id`,`brand_id`) Values ("PROD29627","持妆塑形眉彩笔","Black Brown","<P><BR>精巧笔尖，易于上妆，深色勾勒，浅色塑性，双眉即刻立体有型。显色配方使上色均匀、自然，长效持妆无晕染。<BR>精准<BR>笔尖纤细，精准造型，完美匹配自然眉形<BR>精致<BR>纤细一端精准描绘，高光一端塑形轮廓，创造3D立体眉形<BR>持久<BR>蜡质配方易于上色塑形，12小时持久妆效无晕染<BR></P>","[]","null","用深色端沿着眉毛下端画一条眉毛底线<br>用眉笔向上晕染，填充眉毛空隙<br>用浅色端勾勒轮廓，提亮眉骨，精致眉形，令眉形飞扬","深色勾勒，浅色塑性，双眉即刻立体有型","","","","estee_lauder","/product/634/29627/product-catalog/black-brown","SKU53759","1")
+2019-02-05 20:14:46 [Warning] Error SQL: Unknown column 'product_feature' in 'field list'
+debug_backtrace：
+[0] in function phpspider\core\db::insert  in D:\php\htdocs\phpspider\cmc\esteelauder.php  on line 195 
+[1] in function {closure} 
+[2] in function call_user_func  in D:\php\htdocs\phpspider\core\phpspider.php  on line 2002 
+[3] in function phpspider\core\phpspider->get_html_fields  in D:\php\htdocs\phpspider\core\phpspider.php  on line 1464 
+[4] in function phpspider\core\phpspider->collect_page  in D:\php\htdocs\phpspider\core\phpspider.php  on line 1204 
+[5] in function phpspider\core\phpspider->do_collect_page  in D:\php\htdocs\phpspider\core\phpspider.php  on line 1114 
+[6] in function phpspider\core\phpspider->start  in D:\php\htdocs\phpspider\cmc\esteelauder.php  on line 243 
+2019-02-05 20:14:47 [Warning] Query SQL: Select Count(*) As `count` From `t_estee_lauder` Where product_id='PROD38242' limit 1
+2019-02-05 20:14:47 [Warning] Error SQL: Table 'spider_dev.t_estee_lauder' doesn't exist
+debug_backtrace：
+[0] in function phpspider\core\db::get_one  in D:\php\htdocs\phpspider\cmc\esteelauder.php  on line 157 
+[1] in function {closure} 
+[2] in function call_user_func  in D:\php\htdocs\phpspider\core\phpspider.php  on line 2002 
+[3] in function phpspider\core\phpspider->get_html_fields  in D:\php\htdocs\phpspider\core\phpspider.php  on line 1464 
+[4] in function phpspider\core\phpspider->collect_page  in D:\php\htdocs\phpspider\core\phpspider.php  on line 1204 
+[5] in function phpspider\core\phpspider->do_collect_page  in D:\php\htdocs\phpspider\core\phpspider.php  on line 1114 
+[6] in function phpspider\core\phpspider->start  in D:\php\htdocs\phpspider\cmc\esteelauder.php  on line 243 
+2019-02-05 20:14:47 [Warning] Query SQL: Insert Ignore Into `t_product` (`product_id`,`name`,`name_en`,`detail`,`cover`,`product_feature`,`usage`,`effect`,`ingredients`,`skin_type`,`counter`,`source`,`source_url`,`default_sku_id`,`brand_id`) Values ("PROD38242","持妆塑型眉胶笔","Double Wear","<P><STRONG>马拉松眉笔 持久不脱妆</STRONG></P><P><BR>• 一笔即现立体眉形：双头塑型设计，轻松打造立体眉妆效果。<BR>• 持妆零破绽：精准上色，防水防汗，持久不晕染。</P><P><BR><STRONG>使用方法：</STRONG><BR>首先使用眉刷端沿眉毛生长方向梳理，找到眉毛自然生长的形状。<BR>接着使用眉笔描画出眉妆轮廓，填充颜色，修整出最佳眉型。</P>","[]","null","","精准上色<BR>立体饱满","","肌肤类型","","estee_lauder","/product/634/38242/product-catalog/double-wear","SKU66736","1")
+2019-02-05 20:14:47 [Warning] Error SQL: Unknown column 'product_feature' in 'field list'
+debug_backtrace：
+[0] in function phpspider\core\db::insert  in D:\php\htdocs\phpspider\cmc\esteelauder.php  on line 195 
+[1] in function {closure} 
+[2] in function call_user_func  in D:\php\htdocs\phpspider\core\phpspider.php  on line 2002 
+[3] in function phpspider\core\phpspider->get_html_fields  in D:\php\htdocs\phpspider\core\phpspider.php  on line 1464 
+[4] in function phpspider\core\phpspider->collect_page  in D:\php\htdocs\phpspider\core\phpspider.php  on line 1204 
+[5] in function phpspider\core\phpspider->do_collect_page  in D:\php\htdocs\phpspider\core\phpspider.php  on line 1114 
+[6] in function phpspider\core\phpspider->start  in D:\php\htdocs\phpspider\cmc\esteelauder.php  on line 243 
+2019-02-05 20:14:47 [Warning] Query SQL: Select Count(*) As `count` From `t_estee_lauder` Where product_id='PROD1833' limit 1
+2019-02-05 20:14:47 [Warning] Error SQL: Table 'spider_dev.t_estee_lauder' doesn't exist
+debug_backtrace：
+[0] in function phpspider\core\db::get_one  in D:\php\htdocs\phpspider\cmc\esteelauder.php  on line 157 
+[1] in function {closure} 
+[2] in function call_user_func  in D:\php\htdocs\phpspider\core\phpspider.php  on line 2002 
+[3] in function phpspider\core\phpspider->get_html_fields  in D:\php\htdocs\phpspider\core\phpspider.php  on line 1464 
+[4] in function phpspider\core\phpspider->collect_page  in D:\php\htdocs\phpspider\core\phpspider.php  on line 1204 
+[5] in function phpspider\core\phpspider->do_collect_page  in D:\php\htdocs\phpspider\core\phpspider.php  on line 1114 
+[6] in function phpspider\core\phpspider->start  in D:\php\htdocs\phpspider\cmc\esteelauder.php  on line 243 
+2019-02-05 20:14:47 [Warning] Query SQL: Insert Ignore Into `t_product` (`product_id`,`name`,`name_en`,`detail`,`cover`,`product_feature`,`usage`,`effect`,`ingredients`,`skin_type`,`counter`,`source`,`source_url`,`default_sku_id`,`brand_id`) Values ("PROD1833","专业双头眉彩笔","Automatic Brow Pencil Duo","<STRONG>雅诗兰黛专业双头眉彩笔，眉笔、眉刷两端合一，塑形加渲染，一支全掌握。</STRONG><BR>释放风格，多面出击。无论是精准勾勒眉型线条，还是调和眼部光影及脸颊轮廓，雅诗兰黛专业双头眉彩笔均能轻松胜任。","[]","null","首先使用眉刷端沿眉毛生长方向梳理，找到眉毛自然生长的形状。<BR>接着使用眉笔描画出眉妆轮廓，填充颜色，修整出最佳眉型。","勾勒，塑形，填充，可伸缩眉笔+眉刷","眼科专家敏感程度测试<BR>皮肤学专家敏感程度测试<BR>无香料","","","estee_lauder","/product/634/1833/product-catalog/automatic-brow-pencil-duo","SKU6760","1")
+2019-02-05 20:14:47 [Warning] Error SQL: Unknown column 'product_feature' in 'field list'
+debug_backtrace：
+[0] in function phpspider\core\db::insert  in D:\php\htdocs\phpspider\cmc\esteelauder.php  on line 195 
+[1] in function {closure} 
+[2] in function call_user_func  in D:\php\htdocs\phpspider\core\phpspider.php  on line 2002 
+[3] in function phpspider\core\phpspider->get_html_fields  in D:\php\htdocs\phpspider\core\phpspider.php  on line 1464 
+[4] in function phpspider\core\phpspider->collect_page  in D:\php\htdocs\phpspider\core\phpspider.php  on line 1204 
+[5] in function phpspider\core\phpspider->do_collect_page  in D:\php\htdocs\phpspider\core\phpspider.php  on line 1114 
+[6] in function phpspider\core\phpspider->start  in D:\php\htdocs\phpspider\cmc\esteelauder.php  on line 243 
+2019-02-05 20:14:50 [Warning] Query SQL: Select Count(*) As `count` From `t_estee_lauder` Where product_id='PROD38242' limit 1
+2019-02-05 20:14:50 [Warning] Error SQL: Table 'spider_dev.t_estee_lauder' doesn't exist
+debug_backtrace：
+[0] in function phpspider\core\db::get_one  in D:\php\htdocs\phpspider\cmc\esteelauder.php  on line 157 
+[1] in function {closure} 
+[2] in function call_user_func  in D:\php\htdocs\phpspider\core\phpspider.php  on line 2002 
+[3] in function phpspider\core\phpspider->get_html_fields  in D:\php\htdocs\phpspider\core\phpspider.php  on line 1464 
+[4] in function phpspider\core\phpspider->collect_page  in D:\php\htdocs\phpspider\core\phpspider.php  on line 1204 
+[5] in function phpspider\core\phpspider->do_collect_page  in D:\php\htdocs\phpspider\core\phpspider.php  on line 1114 
+[6] in function phpspider\core\phpspider->start  in D:\php\htdocs\phpspider\cmc\esteelauder.php  on line 243 
+2019-02-05 20:14:50 [Warning] Query SQL: Insert Ignore Into `t_product` (`product_id`,`name`,`name_en`,`detail`,`cover`,`product_feature`,`usage`,`effect`,`ingredients`,`skin_type`,`counter`,`source`,`source_url`,`default_sku_id`,`brand_id`) Values ("PROD38242","持妆塑型眉胶笔","Double Wear","<P><STRONG>马拉松眉笔 持久不脱妆</STRONG></P><P><BR>• 一笔即现立体眉形：双头塑型设计，轻松打造立体眉妆效果。<BR>• 持妆零破绽：精准上色，防水防汗，持久不晕染。</P><P><BR><STRONG>使用方法：</STRONG><BR>首先使用眉刷端沿眉毛生长方向梳理，找到眉毛自然生长的形状。<BR>接着使用眉笔描画出眉妆轮廓，填充颜色，修整出最佳眉型。</P>","[]","null","","精准上色<BR>立体饱满","","肌肤类型","","estee_lauder","/product/634/38242/product-catalog/double-wear","SKU66736","1")
+2019-02-05 20:14:50 [Warning] Error SQL: Unknown column 'product_feature' in 'field list'
+debug_backtrace：
+[0] in function phpspider\core\db::insert  in D:\php\htdocs\phpspider\cmc\esteelauder.php  on line 195 
+[1] in function {closure} 
+[2] in function call_user_func  in D:\php\htdocs\phpspider\core\phpspider.php  on line 2002 
+[3] in function phpspider\core\phpspider->get_html_fields  in D:\php\htdocs\phpspider\core\phpspider.php  on line 1464 
+[4] in function phpspider\core\phpspider->collect_page  in D:\php\htdocs\phpspider\core\phpspider.php  on line 1204 
+[5] in function phpspider\core\phpspider->do_collect_page  in D:\php\htdocs\phpspider\core\phpspider.php  on line 1114 
+[6] in function phpspider\core\phpspider->start  in D:\php\htdocs\phpspider\cmc\esteelauder.php  on line 243 
+2019-02-05 20:14:53 [Warning] Query SQL: Select Count(*) As `count` From `t_estee_lauder` Where product_id='PROD38242' limit 1
+2019-02-05 20:14:53 [Warning] Error SQL: Table 'spider_dev.t_estee_lauder' doesn't exist
+debug_backtrace：
+[0] in function phpspider\core\db::get_one  in D:\php\htdocs\phpspider\cmc\esteelauder.php  on line 157 
+[1] in function {closure} 
+[2] in function call_user_func  in D:\php\htdocs\phpspider\core\phpspider.php  on line 2002 
+[3] in function phpspider\core\phpspider->get_html_fields  in D:\php\htdocs\phpspider\core\phpspider.php  on line 1464 
+[4] in function phpspider\core\phpspider->collect_page  in D:\php\htdocs\phpspider\core\phpspider.php  on line 1204 
+[5] in function phpspider\core\phpspider->do_collect_page  in D:\php\htdocs\phpspider\core\phpspider.php  on line 1114 
+[6] in function phpspider\core\phpspider->start  in D:\php\htdocs\phpspider\cmc\esteelauder.php  on line 243 
+2019-02-05 20:14:53 [Warning] Query SQL: Insert Ignore Into `t_product` (`product_id`,`name`,`name_en`,`detail`,`cover`,`product_feature`,`usage`,`effect`,`ingredients`,`skin_type`,`counter`,`source`,`source_url`,`default_sku_id`,`brand_id`) Values ("PROD38242","持妆塑型眉胶笔","Double Wear","<P><STRONG>马拉松眉笔 持久不脱妆</STRONG></P><P><BR>• 一笔即现立体眉形：双头塑型设计，轻松打造立体眉妆效果。<BR>• 持妆零破绽：精准上色，防水防汗，持久不晕染。</P><P><BR><STRONG>使用方法：</STRONG><BR>首先使用眉刷端沿眉毛生长方向梳理，找到眉毛自然生长的形状。<BR>接着使用眉笔描画出眉妆轮廓，填充颜色，修整出最佳眉型。</P>","[]","null","","精准上色<BR>立体饱满","","肌肤类型","","estee_lauder","/product/634/38242/product-catalog/double-wear","SKU66736","1")
+2019-02-05 20:14:53 [Warning] Error SQL: Unknown column 'product_feature' in 'field list'
+debug_backtrace：
+[0] in function phpspider\core\db::insert  in D:\php\htdocs\phpspider\cmc\esteelauder.php  on line 195 
+[1] in function {closure} 
+[2] in function call_user_func  in D:\php\htdocs\phpspider\core\phpspider.php  on line 2002 
+[3] in function phpspider\core\phpspider->get_html_fields  in D:\php\htdocs\phpspider\core\phpspider.php  on line 1464 
+[4] in function phpspider\core\phpspider->collect_page  in D:\php\htdocs\phpspider\core\phpspider.php  on line 1204 
+[5] in function phpspider\core\phpspider->do_collect_page  in D:\php\htdocs\phpspider\core\phpspider.php  on line 1114 
+[6] in function phpspider\core\phpspider->start  in D:\php\htdocs\phpspider\cmc\esteelauder.php  on line 243 
+2019-02-05 20:14:56 [Warning] Query SQL: Select Count(*) As `count` From `t_estee_lauder` Where product_id='PROD1833' limit 1
+2019-02-05 20:14:56 [Warning] Error SQL: Table 'spider_dev.t_estee_lauder' doesn't exist
+debug_backtrace：
+[0] in function phpspider\core\db::get_one  in D:\php\htdocs\phpspider\cmc\esteelauder.php  on line 157 
+[1] in function {closure} 
+[2] in function call_user_func  in D:\php\htdocs\phpspider\core\phpspider.php  on line 2002 
+[3] in function phpspider\core\phpspider->get_html_fields  in D:\php\htdocs\phpspider\core\phpspider.php  on line 1464 
+[4] in function phpspider\core\phpspider->collect_page  in D:\php\htdocs\phpspider\core\phpspider.php  on line 1204 
+[5] in function phpspider\core\phpspider->do_collect_page  in D:\php\htdocs\phpspider\core\phpspider.php  on line 1114 
+[6] in function phpspider\core\phpspider->start  in D:\php\htdocs\phpspider\cmc\esteelauder.php  on line 243 
+2019-02-05 20:14:56 [Warning] Query SQL: Insert Ignore Into `t_product` (`product_id`,`name`,`name_en`,`detail`,`cover`,`product_feature`,`usage`,`effect`,`ingredients`,`skin_type`,`counter`,`source`,`source_url`,`default_sku_id`,`brand_id`) Values ("PROD1833","专业双头眉彩笔","Automatic Brow Pencil Duo","<STRONG>雅诗兰黛专业双头眉彩笔，眉笔、眉刷两端合一，塑形加渲染，一支全掌握。</STRONG><BR>释放风格，多面出击。无论是精准勾勒眉型线条，还是调和眼部光影及脸颊轮廓，雅诗兰黛专业双头眉彩笔均能轻松胜任。","[]","null","首先使用眉刷端沿眉毛生长方向梳理，找到眉毛自然生长的形状。<BR>接着使用眉笔描画出眉妆轮廓，填充颜色，修整出最佳眉型。","勾勒，塑形，填充，可伸缩眉笔+眉刷","眼科专家敏感程度测试<BR>皮肤学专家敏感程度测试<BR>无香料","","","estee_lauder","/product/634/1833/product-catalog/automatic-brow-pencil-duo","SKU6760","1")
+2019-02-05 20:14:56 [Warning] Error SQL: Unknown column 'product_feature' in 'field list'
+debug_backtrace：
+[0] in function phpspider\core\db::insert  in D:\php\htdocs\phpspider\cmc\esteelauder.php  on line 195 
+[1] in function {closure} 
+[2] in function call_user_func  in D:\php\htdocs\phpspider\core\phpspider.php  on line 2002 
+[3] in function phpspider\core\phpspider->get_html_fields  in D:\php\htdocs\phpspider\core\phpspider.php  on line 1464 
+[4] in function phpspider\core\phpspider->collect_page  in D:\php\htdocs\phpspider\core\phpspider.php  on line 1204 
+[5] in function phpspider\core\phpspider->do_collect_page  in D:\php\htdocs\phpspider\core\phpspider.php  on line 1114 
+[6] in function phpspider\core\phpspider->start  in D:\php\htdocs\phpspider\cmc\esteelauder.php  on line 243 

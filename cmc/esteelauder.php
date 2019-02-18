@@ -17,80 +17,29 @@ $configs = array(
         'www.esteelauder.com.cn'
     ),
     'scan_urls' => array(
-        "https://www.esteelauder.com.cn/products/687/product-catalog",//唇膏
+        "https://www.esteelauder.com.cn/products/634/product-catalog",//唇膏
     ),
     'list_url_regexes' => array(
-        "https://www.esteelauder.com.cn/products/687/product-catalog",//唇膏
+        "https://www.esteelauder.com.cn/products/634/product-catalog",//唇膏
     ),
     'content_url_regexes' => array(
-        "/product/687/[0-9a-zA-Z\_\-\/]+",
+        "/product/634/[0-9a-zA-Z\_\-\/]+",
     ),
     'db_config' => array(
-        'host'  => '115.29.189.76',
+        'host'  => 'localhost',
         'port'  => 3306,
         'user'  => 'root',
-        'pass'  => 'xgb3217144',
+        'pass'  => 'root',
         'name'  => 'spider_dev',
         'charset'=>'utf8',
     ),
     'fields' => array(
         // product
         array(
-            'name' => "product_id",
-            'selector' => "@window.PRODUCT_ID = \"(.*?)\";</script>@",
+            'name' => "product_data",
+            'selector' => "@var page_data =(.*?)</script>@",
             'selector_type' => 'regex',
             'required' => true,
-        ),
-        array(
-            'name' => "product_name_en",
-            'selector' => ".product-full__title",
-            'selector_type' => 'css',
-            //'required' => true,
-        ),
-        array(
-            'name' => "product_name",
-            'selector' => ".product-full__subtitle",
-            'selector_type' => 'css',
-            'required' => true,
-        ),
-        array(
-            'name' => "product_cover",
-            'selector' => ".product-full__image > img",
-            'selector_type' => 'css',
-            'required' => true,
-        ),
-        array(
-            'name' => "product_detail",
-            'selector' => ".spp-product__details-description",
-            'selector_type' => 'css',
-            //'required' => true,
-        ),
-        array(
-            'name' => "product_url",
-            'selector' => ".spp-product__mini-bag-description",
-            'selector_type' => 'css',
-            'required' => true,
-        ),
-        array(
-            'name' => "product_attr",
-            'selector' => ".spp-product__mini-bag-image-container > p",
-            'selector_type' => 'css',
-            //'required' => true,
-            'repeated'=>true
-        ),
-        array(
-            'name' => "product_size",
-            'selector' => ".product-full__price-text",
-            'selector_type' => 'css',
-            //'required' => true,
-            //'repeated'=>true
-        ),
-        array(
-            'name' => "product_price",
-            'selector' => ".product-full__price-text > .product-full__price",
-            'selector_type' => 'css',
-            //'required' => true,
-            //'repeated'=>true
         ),
     ),
     //爬虫爬取网页所使用的浏览器类型.随机浏览器类型，用于破解防采集
@@ -122,107 +71,171 @@ $spider->on_start = function($phpspider)
 
 $spider->on_extract_field = function($fieldname, $data, $page)
 {
-    if ($fieldname == 'product_attr')
+    if ($fieldname == 'product_data')
     {
-        $product_use=@$data['0'];
-        $product_effect=@$data['1'];
-        $product_skin_type=@$data['2'];
-        $product_counter=@$data['3'];
-        $product=[
-            'product_use'=>$product_use,
-            'product_effect'=>$product_effect,
-            'product_skin_type'=>$product_skin_type,
-            'product_counter'=>$product_counter,
-        ];
-        $data=$product;
-    }elseif ($fieldname=='product_url'){
-        $reg1="/<a href=\"(.*?)\">(.*?)/i";
-        preg_match_all($reg1,$data,$aarray);
-        $data=empty($aarray['1']['0']) ? '':$aarray['1']['0'];
+    	$jsData=json_decode(trim($data),true);
+    	$prductA=empty($jsData['catalog-spp']['products'][0]) ?'':$jsData['catalog-spp']['products'][0];
+    	if(empty($prductA['PRODUCT_ID'])){
+    		return $data;
+    	}
+    	$product=[
+    			'product_id'=>$prductA['PRODUCT_ID'],
+    			'name'=>$prductA['PROD_RGN_SUBHEADING'],
+    			'name_en'=>$prductA['PROD_RGN_NAME'],
+    			'detail'=>$prductA['PRODUCT_DETAILS_LONG'],
+    			'cover'=>$prductA['LARGE_IMAGE'],
+    			'url'=>$prductA['url'],
+    			'effect'=>$prductA['ATTRIBUTE_DESC_1'],
+    			'usage'=>$prductA['ATTRIBUTE_DESC_2'],
+    			'ingredients'=>$prductA['ATTRIBUTE_DESC_3'],
+    			'skin_type'=>$prductA['ATTRIBUTE_LABEL_4'],
+    			'counter'=>$prductA['ATTRIBUTE_DESC_5'],
+    			'default_sku_id'=>$prductA['defaultSku']['SKU_ID']
+    	];
+    	$skusA=empty($prductA['skus']) ? []:$prductA['skus'];
+    	$skus=[];
+    	if($skusA){
+    		foreach ($skusA as $s){
+    			$currency=1;//RMB
+    			$price=0;
+    			if($s['formattedPrice']){
+    				$price=doubleval(trim(str_replace('¥', '', $s['formattedPrice'])));
+    			}
+    			$unit='';$size=0;
+    			if($s['PRODUCT_SIZE']){
+    				if(preg_match('/\d+(\.\d{1,4})?(ml|g|毫升|克|mg|毫克|片|只|支)+/',$s['PRODUCT_SIZE'],$matchs1)){
+    					$product_size_1=doubleval($s['PRODUCT_SIZE']);
+    					$unit=trim(str_replace($product_size_1, '', $s['PRODUCT_SIZE']));
+    					$size=$product_size_1;
+    				}
+    			}
+    			$skus[]=[
+    					'name'=>$s['SKU_ID'],
+    					'upc_code'=>$s['UPC_CODE'],
+    					'cover'=>$s['XL_IMAGE'],
+    					'price'=>$price,
+    					'currency'=>$currency,
+    					'size'=>$size,
+    					'unit'=>$unit,
+    					'hex'=>$s['HEX_VALUE_STRING'],
+    					'shade_name'=>$s['SHADENAME'],
+    					'shade_cover'=>$s['XL_SMOOSH'],
+    					'shade_description'=>$s['SHADE_DESCRIPTION'],
+    					'color_family'=>$s['ATTRIBUTE_COLOR_FAMILY'],
+    					'smoosh_design'=>$s['SMOOSH_DESIGN'],
+    					'intensity'=>$s['INTENSITY']
+    			];
+    		}
+    	}
+    	$data=[
+    		'product'=>$product,
+    		'sku'=>$skus
+    	];
     }
     return $data;
 };
 
 $category = array(
-    '唇膏' => '173',
+    '眉笔' => '161',
     '唇彩' => '174',
     '唇线笔'=>'176'
 );
 
 $spider->on_extract_page = function($page, $data) use ($category)
 {
-    $product=$data;
-    $categoryId=1;
+	$source='estee_lauder';//来源
+	$brandId='1';//品牌
+	
+    $product=$data['product_data']['product'];
+    $sku=$data['product_data']['sku'];
+    $categoryId=161;
     $productId=trim($product['product_id']);
-    $sql = "Select Count(*) As `count` From `t_estee_lauder` Where product_id='{$productId}'";
+    if(empty($productId)){
+    	return 'Null Product ID';
+    }
+    $sql = "Select Count(*) As `count` From `t_product` Where product_id='{$productId}'";
     $row = db::get_one($sql);
     if (!$row['count'])
     {
-        $skuDir='/uploads/product/'.date('Y').'/'.date('m').'_'.date('d').'/';
-        //$shadeDir='/uploads/product/shade/'.date('Y').'/'.date('m').'/'.date('d').'/';
+        $skuDir='/uploads/product/sku/'.date('Y').'/'.date('m').'_'.date('d').'/'.$categoryId.'/';
+        $productDir='/uploads/product/product/'.date('Y').'/'.date('m').'_'.date('d').'/'.$categoryId.'/';
+        $shadeDir='/uploads/product/shade/'.date('Y').'/'.date('m').'_'.date('d').'/'.$categoryId.'/';
         $url='https://www.esteelauder.com.cn';
         $rating=0;
         $skuDefalut=0;
-        $product_size_arr=explode(' ', $product['product_size']);
-        if(count($product_size_arr)>1){
-            $product_unit=empty($product_size_arr[1]) ?'':$product_size_arr[1];
-            $product_size=empty($product_size_arr[0]) ?'':$product_size_arr[0];
-            if( preg_match('/\\d+/',$product_size,$matchs1) == 1){
-            }else{
-                $product_unit=empty($product_size_arr[2]) ?'':$product_size_arr[2];
-                $product_size=empty($product_size_arr[1]) ?0:$product_size_arr[1];
-            }
-            if($product_size){
-                if(is_numeric(trim($product_size))){
-                    
-                }else{
-                    $product_size_1=intval($product_size);
-                    $product_unit=trim(str_replace($product_size_1, '', $product_size));
-                    $product_size=$product_size_1;
-                }
-            }
-            $product_unit=strtolower($product_unit);
-            if(in_array($product_unit,  ['ml','毫升','g','克','mg','毫克','片','只','支'])){
-                
-            }else{
-                $product_unit='';
-                $product_size=0;
-            }
-        }
+ 		
         $pCover=[];
-        if($product['product_cover']){
-            if(count($product['product_cover'])>1){
-                foreach ($product['product_cover'] as $p){
-                    $pCover[]=image::saveFile($skuDir,$url.$p);
+        if($product['cover']){
+            if(count($product['cover'])>1){
+                foreach ($product['cover'] as $p){
+                	$pCover[]=image::saveFile($productDir,$url.$p);
                 }
             }else{
-                $pCover[]=image::saveFile($skuDir,$url.$product['product_cover']);
+            	$pCover[]=image::saveFile($productDir,$url.$product['cover']);
             }
         }
-        $product_price=trim(str_replace('¥', '', $product['product_price']));
-        $currency=1;
         $productData=[
-            'product_id'=>$productId,
-            'product_name'=>empty($product['product_name']) ?'':$product['product_name'],
-            'product_name_en'=>empty($product['product_name_en'])?'':$product['product_name_en'],
-            'product_cover'=>json_encode($pCover),
-            'product_feature'=>'',//json_encode($product['product_desc'],JSON_UNESCAPED_UNICODE),
-            'buzzword'=>'',//$product['buzzword'],
-            'source'=>'esteelauder',
-            'source_url'=>empty($product['product_url']) ?'':$product['product_url'],
-            'avg_rating'=>$rating,
-            'category_id'=>$categoryId,
-            'product_detail'=>empty($product['product_detail'])?'':$product['product_detail'],
-            'product_use'=>empty($product['product_use'])?'':$product['product_use'],
-            'product_effect'=>empty($product['product_effect'])?'':$product['product_effect'],
-            'product_skin_type'=>empty($product['product_skin_type'])?'':$product['product_skin_type'],
-            'product_counter'=>empty($product['product_counter'])?'':$product['product_counter'],
-            'size'=>trim($product_size),
-            'unit'=>trim($product_unit),
-            'price'=>trim($product_price),
-            'currency'=>$currency,
+        		'product_id'=>$productId,
+        		'name'=>$product['name'],
+        		'name_en'=>$product['name_en'],
+        		'detail'=>$product['detail'],
+        		'cover'=>json_encode($pCover),
+        		//'product_feature'=>json_encode($product['product_desc'],JSON_UNESCAPED_UNICODE),
+        		'usage'=>empty($product['usage'])?'':$product['usage'],
+        		'effect'=>empty($product['effect'])?'':$product['effect'],
+        		'ingredients'=>empty($product['ingredients'])?'':$product['ingredients'],
+        		'skin_type'=>empty($product['skin_type'])?'':$product['skin_type'],
+        		'counter'=>empty($product['counter'])?'':$product['counter'],
+        		'source'=>$source,
+        		'source_url'=>$product['url'],
+        		'default_sku_id'=>$product['default_sku_id'],
+        		'brand_id'=>$brandId
         ];
-        $p_id=db::insert("t_estee_lauder", $productData);
+        $defaultSkuId=$product['default_sku_id'];
+        $productId=db::insert("t_product", $productData);
+        if($productId){
+        	foreach ($sku as $s){
+        		
+        		$sql = "Select id From `t_shade` Where name='{$s['shade_name']}'";
+        		$shadeArr = db::get_one($sql);
+        		if(empty($shadeArr)){
+	        		$shadeData=[
+	        			'name'=>$s['shade_name'],
+	        			'hex'=>$s['hex'],
+	        				'cover'=>image::saveFile($shadeDir,$url.$s['shade_cover']),
+	        			'description'=>$s['shade_description'],
+	        			'color_family'=>$s['color_family'],
+	        			'smoosh_design'=>$s['smoosh_design'],
+	        			'intensity'=>$s['intensity']
+	        		];
+	        		$shadeId=db::insert("t_shade", $shadeData);
+        		}else{
+        			$shadeId=$shadeArr['id'];
+        		}
+        		$sCover=[];
+        		if($s['cover']){
+        			if(is_array($s['cover'])){
+        				foreach ($s['cover'] as $p){
+        					$sCover[]=image::saveFile($skuDir,$url.$p);
+        				}
+        			}else{
+        				$sCover[]=image::saveFile($skuDir,$url.$s['cover']);
+        			}
+        		}
+        		$skuData=[
+        				'product_id'=>$productId,
+        				'name'=>$s['name'],
+        				'cover'=>json_encode($sCover),
+        				'price'=>$s['price'],
+        				'currency'=>$s['currency'],
+        				'size'=>$s['size'],
+        				'unit'=>$s['unit'],
+        				'shade_id'=>$shadeId,
+        				'is_default'=>($s['name']==$product['default_sku_id']) ?1:0
+        		];
+        		$skuId=db::insert("t_sku", $skuData);
+        	}
+        }
     }
     return $data;
 };
