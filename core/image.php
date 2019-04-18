@@ -61,7 +61,7 @@ class image{
             echo ("ERROR_HTTP_CONTENTTYPE");
             return $url;
         }
-        $absDir=dirname(__FILE__).'/..'.$dir;
+        $absDir=dirname(__DIR__). '/../../my-data/cosmetic'.$dir;
         if(!is_dir($absDir)){
             if(mkdir($absDir,0777,true)){
                 
